@@ -66,6 +66,12 @@ export default function AuthLayout() {
             title: 'Add Supervisors',
           }}
         />
+        <Stack.Screen
+          name='managerHandledOutpasses'
+          options={{
+            title: 'Manager',
+          }}
+        />
       </Stack>
     </>
   );

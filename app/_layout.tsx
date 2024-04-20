@@ -31,10 +31,10 @@ export default function RootLayout() {
     if (loaded) {
       SplashScreen.hideAsync();
     }
-    const time = setTimeout(() => {
-      router.push('/checkerHome');
-    }, 500);
-    return () => clearTimeout(time);
+    // const time = setTimeout(() => {
+    //   router.push('/checkerHome');
+    // }, 500);
+    // return () => clearTimeout(time);
   }, [loaded]);
 
   if (!loaded) return null;

@@ -3,33 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { ScrollView, View, H2, H4 } from 'tamagui';
 import CustomCardManager from '@/components/CustomCardManager';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useQuery } from '@tanstack/react-query';
+import { getTokenStats } from '@/services/api';
 import { router } from 'expo-router';
 
 export default function ManagerHome() {
-  const [pendingOutPassNo, setPendingOutPassNo] = React.useState<Number>(0);
-  const [approvedOutPassNo, setApprovedOutPassNo] = React.useState<Number>(0);
-  const [deniedOutPassNo, setDeniedOutPassNo] = React.useState<Number>(0);
-
-  React.useEffect(() => {
-    try {
-      (async () => {
-        const pendingOutPasses = await AsyncStorage.getItem('pendingOutPassNo');
-        const approvedOutPasses = await AsyncStorage.getItem('approvedOutPassNo');
-        const deniedOutPasses = await AsyncStorage.getItem('deniedOutPassNo');
-
-        const pendingOutPassesNumber = Number(pendingOutPasses) ?? 0;
-        const approvedOutPassesNumber = Number(approvedOutPasses) ?? 0;
-        const deniedOutPassesNumber = Number(deniedOutPasses) ?? 0;
-
-        setPendingOutPassNo(pendingOutPassesNumber);
-        setApprovedOutPassNo(approvedOutPassesNumber);
-        setDeniedOutPassNo(deniedOutPassesNumber);
-      })();
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+  const { data } = useQuery({
+    queryKey: ['tokenStats'],
+    queryFn: getTokenStats,
+    // enabled:false
+  });
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: '#fbfdff' }}>
@@ -42,15 +25,41 @@ export default function ManagerHome() {
         </ImageBackground>
       </View>
       <ScrollView style={{ width: '100%', padding: 10, flex: 1 }}>
-        <CustomCardManager key={1} text='Check Pending OutPasses' number={pendingOutPassNo} title='Pending' />
+        <CustomCardManager
+          key={1}
+          text='Check Pending OutPasses'
+          number={data ? data.pending : 0}
+          title='Pending'
+          onPress={() => router.push('/(stack)/managerPending')}
+        />
         <CustomCardManager
           key={2}
           text='Check Approved OutPasses'
-          number={approvedOutPassNo}
+          number={data ? data.approved : 0}
           title='Approved'
-          onPress={() => router.push('/managerApproved')}
+          onPress={() =>
+            router.push({
+              pathname: '/(stack)/managerHandledOutpasses',
+              params: {
+                type: 'accepted',
+              },
+            })
+          }
         />
-        <CustomCardManager key={3} text='Check Denied OutPasses' number={deniedOutPassNo} title='Denied' />
+        <CustomCardManager
+          key={3}
+          text='Check Denied OutPasses'
+          number={data ? data.denied : 0}
+          title='Denied'
+          onPress={() =>
+            router.push({
+              pathname: '/(stack)/managerHandledOutpasses',
+              params: {
+                type: 'rejected',
+              },
+            })
+          }
+        />
       </ScrollView>
     </SafeAreaView>
   );

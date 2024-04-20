@@ -46,7 +46,7 @@ export default function CreateAnnouncement() {
           onChangeText={text => {
             setTopic(text);
             setError(false);
-          }} 
+          }}
           error={error}
           multiline={false}
         />
@@ -56,7 +56,7 @@ export default function CreateAnnouncement() {
           onChangeText={text => {
             setTitle(text);
             setError(false);
-          }} 
+          }}
           error={error}
           multiline={false}
         />
@@ -66,7 +66,7 @@ export default function CreateAnnouncement() {
           onChangeText={text => {
             setDescription(text);
             setError(false);
-          }} 
+          }}
           error={error}
           multiline={true} // Use multiline for longer description
         />

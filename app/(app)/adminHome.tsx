@@ -17,7 +17,14 @@ export default function AdminHome() {
           </View>
         </ImageBackground>
       </View>
-      <Card w={'90%'} mt='$3' als='center' backgroundColor={'$blue6Dark'} bordered onPress={() => router.push('/addSupervisors')}>
+      <Card
+        w={'90%'}
+        mt='$3'
+        als='center'
+        backgroundColor={'$blue6Dark'}
+        bordered
+        onPress={() => router.push('/addSupervisors')}
+      >
         <Card.Header fd='row' jc='space-around' ai='center'>
           <YStack>
             <H2 col={'white'}>Add</H2>

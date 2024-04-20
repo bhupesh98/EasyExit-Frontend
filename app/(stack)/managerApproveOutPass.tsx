@@ -1,19 +1,20 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, H6, Button, ButtonText, H4, ScrollView, Spinner, Dialog, TextArea } from 'tamagui';
+import { View, H6, Button, ButtonText, H4, ScrollView, Spinner, Dialog, TextArea, Paragraph } from 'tamagui';
 import { Link, router, useLocalSearchParams } from 'expo-router';
 import Avatar from '@/components/Avatar';
 import { useMutation } from '@tanstack/react-query';
 import { Role } from '@/constants/Role';
 import { ToastAndroid } from 'react-native';
 import { acceptToken, rejectToken } from '@/services/api';
-import CustomTextInput from '@/components/CustomTextInput';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function managerApproveOutPass() {
   const [rejectionReason, setReason] = React.useState<string>('');
+  const [showD, setShowD] = React.useState<boolean>(false);
 
   const { heading, name, startTime, endTime, email, reason, phoneNumber, profileImg, token } =
-    useLocalSearchParams<Record<string, string>>();
+    useLocalSearchParams<Record<any, any>>();
 
   const acceptMutation = useMutation({
     mutationKey: [Role.MANAGER, 'approveToken'],
@@ -55,12 +56,14 @@ export default function managerApproveOutPass() {
         <ScrollView>
           <Avatar imageUri={profileImg} />
           <H4 mt={'$4'}>{name}</H4>
-          <H6 theme='alt2'>
-            {`${email} | `}
-            <Link href={`tel:+91 ${phoneNumber}`}>
-              <H6 theme='alt2'>{`+91${phoneNumber}`}</H6>
-            </Link>
-          </H6>
+          <Paragraph theme='alt2'>
+            {`${email}`}
+            {phoneNumber && (
+              <Link href={`tel:+91 ${phoneNumber}`}>
+                <Paragraph theme='alt2'>{` | +91${phoneNumber}`}</Paragraph>
+              </Link>
+            )}
+          </Paragraph>
           <H6 my={'$4'}>{reason}</H6>
           <H6>
             {'StartTime: '}
@@ -87,12 +90,18 @@ export default function managerApproveOutPass() {
               <Spinner color={'$blue1Dark'} />
             : <ButtonText col={'#21bf73'}>Approve</ButtonText>}
           </Button>
-          <Dialog modal>
-            <Dialog.Trigger asChild>
-              <Button bg={'#fbfdff'} theme='red' borderWidth={1.5} borderColor={'#f45954'} w={'100%'} size={'$5'}>
-                <ButtonText col={'#f45954'}>Deny</ButtonText>
-              </Button>
-            </Dialog.Trigger>
+          <Button
+            bg={'#fbfdff'}
+            theme='red'
+            borderWidth={1.5}
+            borderColor={'#f45954'}
+            w={'100%'}
+            size={'$5'}
+            onPress={() => setShowD(true)}
+          >
+            <ButtonText col={'#f45954'}>Deny</ButtonText>
+          </Button>
+          <Dialog modal open={showD}>
             <Dialog.Portal>
               <Dialog.Overlay key='overlay' opacity={0.5} enterStyle={{ opacity: 0 }} exitStyle={{ opacity: 0 }} />
               <Dialog.Content
@@ -134,6 +143,17 @@ export default function managerApproveOutPass() {
                     </ButtonText>
                   }
                 </Button>
+                <Dialog.Close asChild>
+                  <Button
+                    position='absolute'
+                    onPress={() => setShowD(false)}
+                    top='$3'
+                    right='$3'
+                    size='$2'
+                    circular
+                    icon={props => <Ionicons name='close' size={props.size} color={props.color} />}
+                  />
+                </Dialog.Close>
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog>

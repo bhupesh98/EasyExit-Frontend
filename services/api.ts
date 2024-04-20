@@ -19,7 +19,9 @@ import {
   getSupervisorData,
   ProfileData,
   TokenStats,
+  OutpassHandledByManagerData,
 } from '@/interfaces/ApiResults';
+import { OutPassCardManagerProps } from '@/interfaces/CustomCardManagerProps';
 
 export const getSearchResults = async (searchString: string): Promise<SearchResultsData[]> => {
   try {
@@ -101,7 +103,7 @@ export const adminRegister = async (data: AdminRegisterData): Promise<TokenData>
 export const approvedStudentOutpass = async (): Promise<OutpassResultsData[]> => {
   try {
     const jwtToken = await getItemAsync('token');
-    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/manager/tokens/accepted`, {
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/user/approvedOutpass`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
@@ -376,6 +378,27 @@ export const rejectToken = async (data: { token: string }): Promise<string> => {
     return res.message;
   } catch (error) {
     if ([400, 404, 304, 500].includes(error.response?.status)) {
+      throw new Error(JSON.stringify(error.response?.data));
+    } else throw new Error('Unknown Error');
+  }
+};
+
+export const OutpassHandledByManager = async (type:string): Promise<OutpassHandledByManagerData[]> => {
+  try {
+    const jwtToken = await getItemAsync('token');
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/manager/tokens/${type}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+    const res: Response200<OutpassHandledByManagerData[]> = response.data;
+    return res.data.map(data => {
+      data.startTime = new Date(data.startTime);
+      data.endTime = new Date(data.endTime);
+      return data;
+    });
+  } catch (error) {
+    if ([500].includes(error.response?.status)) {
       throw new Error(JSON.stringify(error.response?.data));
     } else throw new Error('Unknown Error');
   }

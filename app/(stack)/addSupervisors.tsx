@@ -136,10 +136,15 @@ export default function AddSupervisors() {
               <AlertDialog.Description>
                 Supervisors added successfully. An email has been sent to each supervisor.
               </AlertDialog.Description>
-                <Button theme="active" onPress={() => {
+              <Button
+                theme='active'
+                onPress={() => {
                   setOpen(false);
                   if (router.canGoBack) router.back();
-                }}>Accept</Button>
+                }}
+              >
+                Accept
+              </Button>
             </YStack>
           </AlertDialog.Content>
         </AlertDialog.Portal>

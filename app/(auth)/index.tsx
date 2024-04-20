@@ -17,25 +17,27 @@ import useNotification from '@/hooks/useNotification';
 
 import messaging from '@react-native-firebase/messaging';
 
-
 export default function Login() {
-  const { subscribeTopic, setBackgroundMessageHandler, requestUserPermission, handleNotification, getToken } = useNotification();
-  
+  const { subscribeTopic, setBackgroundMessageHandler, requestUserPermission, handleNotification, getToken } =
+    useNotification();
+
   useEffect(() => {
     requestUserPermission().then(() => {
       getToken();
-    })
+    });
 
-    messaging().getInitialNotification().then(remoteM => {
-      if (remoteM) {
-        console.log("Meassage cause app to open from quit state ->", remoteM.notification);
-      }
-    })
+    messaging()
+      .getInitialNotification()
+      .then(remoteM => {
+        if (remoteM) {
+          console.log('Meassage cause app to open from quit state ->', remoteM.notification);
+        }
+      });
 
-    messaging().onNotificationOpenedApp((remoteMessage => {
-      console.log("Notification caused the app to open from background state: ", remoteMessage.notification);
-    }))
-    
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log('Notification caused the app to open from background state: ', remoteMessage.notification);
+    });
+
     setBackgroundMessageHandler();
     handleNotification();
     subscribeTopic('ann');
@@ -78,6 +80,13 @@ export default function Login() {
     }
   };
 
+  // React.useEffect(() => {
+  //   (async () => {
+  //     const token = await SecureStore.getItemAsync('token');
+  //     console.log(token);
+  //     if (token) router.replace('/managerHome');
+  //   })();
+  // }, []);
   // if (process.env.STATUS === "DEVELOPMENT") {
   // useEffect(() => {
   //   setTimeout(() => {
@@ -113,6 +122,7 @@ export default function Login() {
           id='password'
           onChangeText={setPassword}
           error={error}
+          secureTextEntry
         />
         {error && password.trim() === '' && <H6 col={'$red10'}>Password is Required</H6>}
         <Label ml='$2' mb='$1' unstyled mt='$1'>
