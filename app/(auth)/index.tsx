@@ -80,13 +80,18 @@ export default function Login() {
     }
   };
 
-  // React.useEffect(() => {
-  //   (async () => {
-  //     const token = await SecureStore.getItemAsync('token');
-  //     console.log(token);
-  //     if (token) router.replace('/managerHome');
-  //   })();
-  // }, []);
+  React.useEffect(() => {
+    (async () => {
+      const token = await SecureStore.getItemAsync('token');
+      const role = await SecureStore.getItemAsync('role');
+      if (token && role) {
+        if (role === Role.ADMIN) router.replace('/(app)/adminHome');
+        if (role === Role.MANAGER) router.replace('/(app)/managerHome');
+        if (role === Role.USER) router.replace('/(app)/home');
+        if (role === Role.CHECKER) router.replace('/(app)/checkerHome');
+      }
+    })();
+  }, []);
   // if (process.env.STATUS === "DEVELOPMENT") {
   // useEffect(() => {
   //   setTimeout(() => {

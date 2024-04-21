@@ -77,8 +77,8 @@ export default function CheckerHome() {
                     title={<H4>{item.heading}</H4>}
                     subTitle={
                       <YStack>
-                        <Paragraph>{item.exitTime.toLocaleString()}</Paragraph>
-                        {item.returnedTime && <Paragraph>{item.returnedTime.toLocaleString()}</Paragraph>}
+                        <Paragraph>{item.exitTime?.toLocaleString()}</Paragraph>
+                        {item.returnedTime && <Paragraph>{item.returnedTime?.toLocaleString()}</Paragraph>}
                       </YStack>
                     }
                   />

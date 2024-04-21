@@ -1,20 +1,23 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { approvedStudentOutpass } from '@/services/api';
+import { GetStudentOutpasses } from '@/services/api';
 import { Spinner, Image, ScrollView, View, H4 } from 'tamagui';
 import CustomCard from '@/components/CustomCard';
 import NoDataSVG from '@/assets/no-data.svg';
+import { useLocalSearchParams } from 'expo-router';
 
-export default function ApprovedOutpass() {
+export default function StudentOutpass() {
+  const { outpassType } = useLocalSearchParams<Record<string, string>>();
+
   const { data = [], isLoading } = useQuery({
-    queryKey: ['approved', 'student', 'outpass'],
-    queryFn: approvedStudentOutpass,
+    queryKey: ['approved','denied', 'pending', 'student', 'outpass'],
+    queryFn: ()=>GetStudentOutpasses(outpassType),
   });
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fbfdff', alignItems: 'center' }}>
-      <ScrollView style={{ paddingHorizontal: 10, paddingTop: 10 }}>
+      <ScrollView style={{  width:'100%', paddingHorizontal: 10, paddingTop: 10 }}>
         {isLoading ?
           <Spinner size='large' color='$blue1Dark' />
         : data.length === 0 ?
@@ -32,6 +35,7 @@ export default function ApprovedOutpass() {
               endTime={value.endTime}
               heading={value.heading}
               phoneNumber={value.phoneNumber}
+              reason={value.reason}
             />
           ))
         }

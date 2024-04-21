@@ -100,10 +100,10 @@ export const adminRegister = async (data: AdminRegisterData): Promise<TokenData>
   }
 };
 
-export const approvedStudentOutpass = async (): Promise<OutpassResultsData[]> => {
+export const GetStudentOutpasses = async (outpassType: string): Promise<OutpassResultsData[]> => {
   try {
     const jwtToken = await getItemAsync('token');
-    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/user/approvedOutpass`, {
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/user/${outpassType}`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },

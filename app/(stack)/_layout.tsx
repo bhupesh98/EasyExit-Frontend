@@ -31,27 +31,15 @@ export default function AuthLayout() {
         }}
       >
         <Stack.Screen
-          name='approvedOutpass'
-          options={{
-            title: 'Approved Outpass',
-          }}
-        />
-        <Stack.Screen
-          name='rejectedOutpass'
-          options={{
-            title: 'Rejected Outpass',
-          }}
-        />
-        <Stack.Screen
           name='generateOutpass'
           options={{
             title: 'Generate OutPass',
           }}
         />
         <Stack.Screen
-          name='pendingOutpass'
+          name='studentOutpasses'
           options={{
-            title: 'Pending OutPass',
+            title: 'Student OutPasses',
           }}
         />
         <Stack.Screen
