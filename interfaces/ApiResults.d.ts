@@ -75,3 +75,13 @@ export type OutpassHandledByManagerData = {
   email: string;
   phoneNumber?: number;
 };
+
+export type AdminCheckData = {
+  name: string;
+  email: string;
+  phoneNumber: number;
+  heading: string;
+  exitTime: Date;
+  returnedTime: Date;
+  status: TokenStatus;
+};

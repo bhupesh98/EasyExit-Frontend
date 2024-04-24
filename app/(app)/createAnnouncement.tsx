@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, View, TouchableOpacity, Text, Modal } from 'react-native';
+import { StyleSheet, ImageBackground, TouchableOpacity, Text, Modal } from 'react-native';
 import CustomTextInput2 from '@/components/CustomTextInput2';
 import { H2, H4, H6 } from 'tamagui';
-import { Image, Button, ButtonText } from 'tamagui';
+import { Image, Button, ButtonText, View } from 'tamagui';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CreateAnnouncement() {
   const [topic, setTopic] = useState('');
@@ -29,15 +30,16 @@ export default function CreateAnnouncement() {
   };
 
   return (
-    <View style={{ backgroundColor: '#fbfdff', flex: 1 }}>
-      <View style={styles.backgroundContainer}>
-        <Image source={require('@/assets/images.jpeg')} style={styles.backgroundImage} />
-        <View style={styles.overlay}>
-          <H2 fontWeight={'bold'} col={'white'}>
-            Create announcement
-          </H2>
-          <H4 col={'white'}>Update the organization</H4>
-        </View>
+    <SafeAreaView style={{ backgroundColor: '#fbfdff', flex: 1 }}>
+      <View h='35%' w={'100%'}>
+        <ImageBackground source={require('@/assets/images.jpeg')} style={{ flex: 1 }}>
+          <View style={styles.overlay}>
+            <H2 fontWeight={'bold'} col={'white'}>
+              Notification
+            </H2>
+            <H4 col={'white'}>Timely Updates for You</H4>
+          </View>
+        </ImageBackground>
       </View>
       <View style={styles.formContainer}>
         <CustomTextInput2
@@ -96,7 +98,7 @@ export default function CreateAnnouncement() {
           </View>
         </TouchableOpacity>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -106,7 +108,6 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

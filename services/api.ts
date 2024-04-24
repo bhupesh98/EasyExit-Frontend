@@ -20,6 +20,7 @@ import {
   ProfileData,
   TokenStats,
   OutpassHandledByManagerData,
+  AdminCheckData
 } from '@/interfaces/ApiResults';
 import { OutPassCardManagerProps } from '@/interfaces/CustomCardManagerProps';
 
@@ -320,13 +321,32 @@ export const getTokenStats = async (): Promise<TokenStats> => {
         Authorization: `Bearer ${jwtToken}`,
       },
     });
-
     if (response.status === 200) {
       const res: Response200<TokenStats> = response.data;
       return res.data;
     }
   } catch (error) {
     if (error.response?.status === 500) {
+      throw new Error(JSON.stringify(error.response?.data));
+    } else throw new Error('Unknown Error');
+  }
+};
+
+export const getCheckIns = async (): Promise<Omit<AdminCheckData,'status' | 'returnedTime'>[]> => {
+  try {
+    const jwtToken = await getItemAsync('token');
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/admin/checkIn`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+    const res: Response200<Omit<AdminCheckData,'status' | 'returnedTime'>[]> = response.data;
+    return res.data.map(data => {
+      data.exitTime = new Date(data.exitTime);
+      return data;
+    });
+  } catch (error) {
+    if ([500].includes(error.response?.status)) {
       throw new Error(JSON.stringify(error.response?.data));
     } else throw new Error('Unknown Error');
   }
@@ -403,3 +423,25 @@ export const OutpassHandledByManager = async (type:string): Promise<OutpassHandl
     } else throw new Error('Unknown Error');
   }
 };
+
+export const getCheckOut = async (): Promise<AdminCheckData[]> => {
+  try {
+    const jwtToken = await getItemAsync('token');
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/admin/checkOut`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+
+    const res: Response200<AdminCheckData[]> = response.data;
+    return res.data.map(data => {
+      data.exitTime = new Date(data.exitTime);
+      data.returnedTime = new Date(data.returnedTime);
+      return data;
+    });
+  } catch (error) {
+    if ([500].includes(error.response?.status)) {
+      throw new Error(JSON.stringify(error.response?.data));
+    } else throw new Error('Unknown Error');
+  }
+}

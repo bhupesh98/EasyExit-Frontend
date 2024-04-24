@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import NotificationPopup from './NotificationPopup';
 
-interface Announcement {
+export interface Announcement {
   title: string;
   description: string;
   topic: string;

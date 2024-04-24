@@ -2,7 +2,7 @@ import { SafeAreaView } from 'react-native';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GetStudentOutpasses } from '@/services/api';
-import { Spinner, Image, ScrollView, View, H4 } from 'tamagui';
+import { Spinner, ScrollView, View, H4 } from 'tamagui';
 import CustomCard from '@/components/CustomCard';
 import NoDataSVG from '@/assets/no-data.svg';
 import { useLocalSearchParams } from 'expo-router';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 import { Heading, View, TextArea, XStack, Button, ButtonText, H6 } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
 import CustomTextInput from '@/components/CustomTextInput';

@@ -58,7 +58,7 @@ export default function CustomCard(props: CustomCardProps) {
                 alignItems='center'
                 jc='center'
               >
-                <H4>Your OutPass QR</H4>
+                <H4 fontWeight={'bold'}>Your OutPass QR</H4>
                 <SvgQRCode
                   size={240}
                   logoBorderRadius={10}
@@ -75,9 +75,9 @@ export default function CustomCard(props: CustomCardProps) {
                     onPress={() => setShowQR(false)}
                     top='$3'
                     right='$3'
-                    size='$2'
+                    size='$4'
                     circular
-                    icon={props => <Ionicons name='close' size={props.size} color={props.color} />}
+                    icon={props => <Ionicons name='close' size={24} color={props.color} />}
                   />
                 </Dialog.Close>
               </Dialog.Content>

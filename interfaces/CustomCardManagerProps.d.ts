@@ -2,7 +2,7 @@ import { TokenStatus } from "./TokenStatus";
 
 export interface CustomCardManagerProps {
   number?: Number;
-  title: string;
+  title: 'Approved' | 'Denied' | 'Pending' | 'Check-Ins' | 'Check-Out';
   text: string;
   onPress?: () => void;
 }

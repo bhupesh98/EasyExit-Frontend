@@ -22,13 +22,14 @@ export default function HomeLayout() {
           tabBarActiveTintColor: '#0e294b',
           tabBarInactiveTintColor: 'grey',
           tabBarLabel: '',
+          tabBarHideOnKeyboard: true,
         }}
       >
         <Tabs.Screen
           name='adminHome'
-          // redirect={role !== Role.ADMIN}
+          redirect={role !== Role.ADMIN}
           options={{
-            title: 'EasyExit',
+            title: 'Home',
             tabBarIcon({ focused, color, size }) {
               return <Ionicons name={focused ? 'home' : 'home-outline'} color={color} size={size} />;
             },
@@ -58,7 +59,7 @@ export default function HomeLayout() {
           name='managerHome'
           redirect={role !== Role.MANAGER}
           options={{
-            title: 'managerHome',
+            title: 'Home',
             tabBarIcon({ focused, color, size }) {
               return <Ionicons name={focused ? 'home' : 'home-outline'} color={color} size={size} />;
             },
@@ -76,7 +77,7 @@ export default function HomeLayout() {
         />
         <Tabs.Screen
           name='createAnnouncement'
-          redirect={role !== Role.ADMIN}
+          // redirect={role !== Role.ADMIN}
           options={{
             title: 'Create Announcement',
             tabBarIcon({ focused, color, size }) {

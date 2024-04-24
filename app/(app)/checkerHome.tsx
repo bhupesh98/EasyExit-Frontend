@@ -39,7 +39,7 @@ export default function CheckerHome() {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', gap: 10 }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', gap: 10, backgroundColor: '#fbfdff' }}>
       <View h={'35%'} w={'100%'}>
         <ImageBackground source={require('@/assets/images.jpeg')} style={{ flex: 1 }}>
           <View f={1} jc='center' ai='center' bg={'rgba(0,0,0,0.6)'}>
@@ -63,7 +63,7 @@ export default function CheckerHome() {
       </Card>
       <View ai='center' flex={1} w='90%' mb='$2' gap={10}>
         <Heading>Checked Outpasses</Heading>
-        <ScrollView w={'100%'} bouncesZoom centerContent>
+        <ScrollView w={'100%'} showsVerticalScrollIndicator={false} bouncesZoom centerContent>
           {isLoading ?
             <Spinner size='large' />
           : data.length ?
@@ -72,13 +72,21 @@ export default function CheckerHome() {
                 <YGroup.Item key={item.token}>
                   <ListItem
                     bordered
-                    bg={'$backgroundHover'}
+                    bg={'#fbfdff'}
                     icon={<Ionicons name={iconName[item.status]} size={24} color={colorName[item.status]} />}
                     title={<H4>{item.heading}</H4>}
                     subTitle={
                       <YStack>
-                        <Paragraph>{item.exitTime?.toLocaleString()}</Paragraph>
-                        {item.returnedTime && <Paragraph>{item.returnedTime?.toLocaleString()}</Paragraph>}
+                        <Paragraph>
+                          <Paragraph theme='alt2'>Exit Time: </Paragraph>
+                          {item.exitTime?.toLocaleString()}
+                        </Paragraph>
+                        {item.returnedTime && (
+                          <Paragraph>
+                            <Paragraph theme='alt2'>Return Time: </Paragraph>
+                            {item.returnedTime?.toLocaleString()}
+                          </Paragraph>
+                        )}
                       </YStack>
                     }
                   />

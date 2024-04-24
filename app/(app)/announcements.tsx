@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import AnnouncementItem from '../../components/AnnouncementItem';
+import AnnouncementItem, { Announcement } from '../../components/AnnouncementItem';
 import { ImageBackground } from 'react-native';
 import { View, H2, H4 } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { getItem } from 'expo-secure-store';
+import { Role } from '@/constants/Role';
 
-interface Announcement {
-  title: string;
-  description: string;
-  topic: string;
-  notificationStatus: string;
-  senderEmail: string;
-  createdAt: string;
-}
-
-const Announcements: React.FC = () => {
+export default function Announcements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const role = getItem('role');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,9 +84,9 @@ const Announcements: React.FC = () => {
         ))}
       </ScrollView>
       {/* Floating button */}
-      <TouchableOpacity style={styles.floatingButton} onPress={handleCreateNotification}>
+      {role == Role.ADMIN && <TouchableOpacity style={styles.floatingButton} onPress={handleCreateNotification}>
         <Ionicons name='add' size={24} color='#fff' />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </SafeAreaView>
   );
 };
@@ -116,5 +110,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default Announcements;

@@ -80,26 +80,6 @@ export default function Login() {
     }
   };
 
-  React.useEffect(() => {
-    (async () => {
-      const token = await SecureStore.getItemAsync('token');
-      const role = await SecureStore.getItemAsync('role');
-      if (token && role) {
-        if (role === Role.ADMIN) router.replace('/(app)/adminHome');
-        if (role === Role.MANAGER) router.replace('/(app)/managerHome');
-        if (role === Role.USER) router.replace('/(app)/home');
-        if (role === Role.CHECKER) router.replace('/(app)/checkerHome');
-      }
-    })();
-  }, []);
-  // if (process.env.STATUS === "DEVELOPMENT") {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     router.push('/aaa');
-  //     console.log('hi');
-  //   }, 20000);
-  // }, []);
-
   return (
     <SafeAreaView style={{ backgroundColor: '#fbfdff', flex: 1 }}>
       <View ai='center' marginBottom='$1' marginTop='$4'>

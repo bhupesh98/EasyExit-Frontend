@@ -28,6 +28,7 @@ export default function AuthLayout() {
           headerTitleStyle: {
             color: 'white',
           },
+          animation: 'default',
         }}
       >
         <Stack.Screen
