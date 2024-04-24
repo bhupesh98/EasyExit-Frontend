@@ -60,6 +60,12 @@ export default function AuthLayout() {
             title: 'Manager',
           }}
         />
+        <Stack.Screen
+          name='managerApproveOutPass'
+          options={{
+            title: 'Student OutPass',
+          }}
+        />
       </Stack>
     </>
   );

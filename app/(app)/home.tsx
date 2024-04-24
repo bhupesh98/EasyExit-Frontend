@@ -26,7 +26,7 @@ export default function Home() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['getToken'],
     queryFn: () => getToken(tokenId),
-    enabled: showOutPass
+    enabled: showOutPass,
   });
 
   const handlePress = (status: string) => {
@@ -60,7 +60,7 @@ export default function Home() {
         </ImageBackground>
       </View>
       <ScrollView style={{ padding: 10 }}>
-        {showOutPass && !isLoading && !isError &&(
+        {showOutPass && !isLoading && !isError && (
           <CustomCard
             acceptedBy={data?.acceptedBy}
             endTime={data.endTime}

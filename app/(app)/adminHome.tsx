@@ -1,18 +1,17 @@
-import { ImageBackground, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { Button, ButtonText, Card, H2, H4, Separator, View, YStack } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { ImageBackground } from 'react-native';
 
 export default function AdminHome() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View h={'35%'} w={'100%'}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fbfdff' }}>
+      <View h='35%' w={'100%'}>
         <ImageBackground source={require('@/assets/images.jpeg')} style={{ flex: 1 }}>
-          <View f={1} jc='center' ai='center' bg={'rgba(0,0,0,0.6)'}>
-            <H2 fontWeight={'bold'} col={'white'}>
-              Welcome to EasyExit
-            </H2>
+          <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center' }}>
+            <H2 col={'white'}>Welcome to EasyExit</H2>
             <H4 col={'white'}>Manage Your Outpass</H4>
           </View>
         </ImageBackground>
