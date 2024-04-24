@@ -85,10 +85,26 @@ export default function HomeLayout() {
             },
           }}
         />
-        <Tabs.Screen
+        {/* <Tabs.Screen
           name='profile'
           options={{
             title: 'Profile',
+            tabBarIcon({ focused, color, size }) {
+              return <Ionicons name={focused ? 'person' : 'person-outline'} color={color} size={size} />;
+            },
+          }}
+        /> */}
+        <Tabs.Screen
+          name='profile2'
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#0e294b',
+            },
+            headerTitleStyle: {
+              color: 'white',
+            },
+            title: 'My Profile',
             tabBarIcon({ focused, color, size }) {
               return <Ionicons name={focused ? 'person' : 'person-outline'} color={color} size={size} />;
             },

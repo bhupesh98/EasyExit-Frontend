@@ -43,7 +43,7 @@ export default function RootLayout() {
     })();
   }, [loaded]);
 
-  React.useEffect(() => {}, [loaded]);
+  React.useEffect(() => { }, [loaded]);
 
   if (!loaded) return null;
 
