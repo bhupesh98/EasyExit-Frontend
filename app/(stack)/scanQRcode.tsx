@@ -1,6 +1,5 @@
-import { Alert, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import { Alert, StyleSheet, TouchableNativeFeedback, SafeAreaView } from 'react-native';
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { CameraView } from 'expo-camera/next';
 import { Ionicons } from '@expo/vector-icons';
 import { H3, XStack, View, Square, H4, AlertDialog, YStack, Button, Image } from 'tamagui';

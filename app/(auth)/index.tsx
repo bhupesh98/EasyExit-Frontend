@@ -84,14 +84,6 @@ export default function Login() {
     }
   };
 
-  // if (process.env.STATUS === "DEVELOPMENT") {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     router.push('/aaa');
-  //     console.log('hi');
-  //   }, 20000);
-  // }, []);
-
   return (
     <SafeAreaView style={{ backgroundColor: '#fbfdff', flex: 1 }}>
       <View ai='center' marginBottom='$1' marginTop='$4'>
@@ -119,6 +111,7 @@ export default function Login() {
           id='password'
           onChangeText={setPassword}
           error={error}
+          secureTextEntry
         />
         {error && password.trim() === '' && <H6 col={'$red10'}>Password is Required</H6>}
         <Label ml='$2' mb='$1' unstyled mt='$1'>

@@ -1,8 +1,8 @@
 import { TokenStatus } from "./TokenStatus";
 
 export interface CustomCardManagerProps {
-  number?: number;
-  title: string;
+  number?: Number;
+  title: 'Approved' | 'Denied' | 'Pending' | 'Check-Ins' | 'Check-Out';
   text: string;
   onPress?: () => void;
 }
@@ -18,5 +18,5 @@ export interface OutPassCardManagerProps {
   value:string;
   status?:TokenStatus;
   phoneNumber:number;
-  data?:Out
+  doRefetch?:any;
 }

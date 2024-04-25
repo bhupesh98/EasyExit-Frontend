@@ -69,6 +69,30 @@ export type TokenStats = {
   denied: number;
 };
 
+export type OutpassHandledByManagerData = {
+  token: string;
+  reason?: string;
+  email?: string;
+  heading: string;
+  startTime: Date;
+  endTime: Date;
+  status: TokenStatus;
+  name: string;
+  email: string;
+  phoneNumber?: number;
+};
+
+export type AdminCheckData = {
+  name: string;
+  email: string;
+  phoneNumber: number;
+  heading: string;
+  exitTime: Date;
+  returnedTime: Date;
+  status: TokenStatus;
+};
+
+
 
 export type NotificaitonResultsData = {
   notificaitonId: string;

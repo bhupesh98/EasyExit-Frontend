@@ -32,6 +32,7 @@ export default function OutpassCardManger(props: OutPassCardManagerProps) {
     mutationFn: acceptToken,
     async onSuccess() {
       ToastAndroid.show('Approved Successfully', ToastAndroid.SHORT);
+      props.doRefetch();
       return;
     },
     onError(error) {
@@ -45,6 +46,8 @@ export default function OutpassCardManger(props: OutPassCardManagerProps) {
     mutationFn: rejectToken,
     async onSuccess() {
       ToastAndroid.show('Denied Successfully', ToastAndroid.SHORT);
+      props.doRefetch();
+      setShowD(false);
       return;
     },
     onError(error) {

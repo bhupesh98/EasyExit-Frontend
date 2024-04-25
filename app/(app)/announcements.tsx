@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import AnnouncementItem from '../../components/AnnouncementItem';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import AnnouncementItem, { Announcement } from '../../components/AnnouncementItem';
 import { ImageBackground } from 'react-native';
 import { View, H2, H4 } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { getItem } from 'expo-secure-store';
+import { Role } from '@/constants/Role';
+
+export default function Announcements() {
 import { useQuery } from '@tanstack/react-query';
 
 import { getNotification } from '@/services/api';
@@ -48,13 +53,11 @@ const Announcements: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fbfdff' }}>
       <View h='35%' w={'100%'}>
         <ImageBackground source={require('@/assets/images.jpeg')} style={{ flex: 1 }}>
           <View style={styles.overlay}>
-            <H2 fontWeight={'bold'} col={'white'}>
-              Notification
-            </H2>
+            <H2 col={'white'}>Notification</H2>
             <H4 col={'white'}>Timely Updates for You</H4>
           </View>
         </ImageBackground>
@@ -65,9 +68,9 @@ const Announcements: React.FC = () => {
         ))}
       </ScrollView>
       {/* Floating button */}
-      <TouchableOpacity style={styles.floatingButton} onPress={handleCreateNotification}>
+      {role == Role.ADMIN && <TouchableOpacity style={styles.floatingButton} onPress={handleCreateNotification}>
         <Ionicons name='add' size={24} color='#fff' />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </SafeAreaView>
   );
 };
@@ -91,5 +94,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default Announcements;

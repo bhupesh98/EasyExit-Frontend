@@ -23,11 +23,29 @@ export default function Home() {
     })();
   });
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['getToken'],
     queryFn: () => getToken(tokenId),
     enabled: showOutPass,
   });
+
+  const handlePress = (status: string) => {
+    if (status === 'Generate') {
+      router.push('/generateOutpass');
+      return;
+    }
+    let outpassType: string;
+    if (status === 'Approved') outpassType = 'approvedOutpass';
+    if (status === 'Denied') outpassType = 'rejectedOutpass';
+    if (status === 'Pending') outpassType = 'pendingOutpass';
+    router.push({
+      pathname: '/(stack)/studentOutpasses',
+      params: {
+        outpassType: outpassType,
+      },
+    });
+    return;
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: '#fbfdff', flex: 1, alignItems: 'center' }}>
@@ -42,16 +60,16 @@ export default function Home() {
         </ImageBackground>
       </View>
       <ScrollView style={{ padding: 10 }}>
-        {showOutPass && !isLoading && (
+        {showOutPass && !isLoading && !isError && (
           <CustomCard
             acceptedBy={data?.acceptedBy}
             endTime={data.endTime}
             heading={data.heading}
             phoneNumber={data?.phoneNumber}
-            key={data.token}
             reason={data.reason}
             startTime={data.startTime}
             status={data.status}
+            value={data.token}
           />
         )}
         <View fd='row' w={'100%'} jc='space-between' flexWrap='wrap' py='$2'>
@@ -65,24 +83,7 @@ export default function Home() {
                 mb='$3'
                 backgroundColor={'#fbfdff'}
                 key={status.id}
-                onPress={() => {
-                  switch (status.status) {
-                    case 'Approved':
-                      router.push('/(stack)/approvedOutpass');
-                      break;
-                    case 'Denied':
-                      router.push('/(stack)/rejectedOutpass');
-                      break;
-                    case 'Generate':
-                      router.push('/(stack)/generateOutpass');
-                      break;
-                    case 'Pending':
-                      router.push('/(stack)/pendingOutpass');
-                      break;
-                    default:
-                      console.log('nothing');
-                  }
-                }}
+                onPress={() => handlePress(status.status)}
               >
                 <Ionicons name={status.iconName} size={50} color={status.color} />
                 <H5>{status.status}</H5>

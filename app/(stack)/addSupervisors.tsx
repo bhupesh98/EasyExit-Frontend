@@ -1,13 +1,13 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomTextInput from '@/components/CustomTextInput';
 import { AlertDialog, Button, ButtonText, H4, View, XStack, YStack } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
 import { useMutation } from '@tanstack/react-query';
 import { addSupervisor } from '@/services/api';
 import { addSupervisorData } from '@/interfaces/ApiDTO';
-import { ToastAndroid } from 'react-native';
+import { ToastAndroid, SafeAreaView } from 'react-native';
 import { router } from 'expo-router';
+import AgreeSVG from '@/assets/agree.svg';
 
 export default function AddSupervisors() {
   const [managerEmails, setManagerEmails] = React.useState<string[]>(['']);
@@ -36,7 +36,7 @@ export default function AddSupervisors() {
         <View>
           <H4 theme='alt2'>Add Mangaers</H4>
           {managerEmails.map((email, index) => (
-            <XStack ai='center' gap='$4' key={index}>
+            <XStack ai='center' gap='$4' key={`manager-${index}`}>
               <CustomTextInput
                 width={'75%'}
                 value={email}
@@ -72,7 +72,7 @@ export default function AddSupervisors() {
           </Button>
           <H4 theme='alt2'>Add Checkers</H4>
           {checkerEmails.map((email, index) => (
-            <XStack ai='center' gap='$4' key={index}>
+            <XStack ai='center' gap='$4' key={`checker-${index}`}>
               <CustomTextInput
                 width={'75%'}
                 value={email}
@@ -131,15 +131,21 @@ export default function AddSupervisors() {
             opacity={1}
             y={0}
           >
-            <YStack>
-              <AlertDialog.Title>Accept</AlertDialog.Title>
+            <YStack jc='center' ai='center' gap='$4'>
+              <AlertDialog.Title fow={'bold'}>Done</AlertDialog.Title>
+              <AgreeSVG width={150} height={150} />
               <AlertDialog.Description>
-                Supervisors added successfully. An email has been sent to each supervisor.
+                {'Supervisors added successfully.\n An email has been sent to each supervisor.'}
               </AlertDialog.Description>
-                <Button theme="active" onPress={() => {
+              <Button
+                theme='active'
+                onPress={() => {
                   setOpen(false);
                   if (router.canGoBack) router.back();
-                }}>Accept</Button>
+                }}
+              >
+                Accept
+              </Button>
             </YStack>
           </AlertDialog.Content>
         </AlertDialog.Portal>

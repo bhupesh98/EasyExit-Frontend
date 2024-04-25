@@ -28,20 +28,9 @@ export default function AuthLayout() {
           headerTitleStyle: {
             color: 'white',
           },
+          animation: 'default',
         }}
       >
-        <Stack.Screen
-          name='approvedOutpass'
-          options={{
-            title: 'Approved Outpass',
-          }}
-        />
-        <Stack.Screen
-          name='rejectedOutpass'
-          options={{
-            title: 'Rejected Outpass',
-          }}
-        />
         <Stack.Screen
           name='generateOutpass'
           options={{
@@ -49,9 +38,9 @@ export default function AuthLayout() {
           }}
         />
         <Stack.Screen
-          name='pendingOutpass'
+          name='studentOutpasses'
           options={{
-            title: 'Pending OutPass',
+            title: 'Student OutPasses',
           }}
         />
         <Stack.Screen
@@ -64,6 +53,18 @@ export default function AuthLayout() {
           name='addSupervisors'
           options={{
             title: 'Add Supervisors',
+          }}
+        />
+        <Stack.Screen
+          name='managerHandledOutpasses'
+          options={{
+            title: 'Manager',
+          }}
+        />
+        <Stack.Screen
+          name='managerApproveOutPass'
+          options={{
+            title: 'Student OutPass',
           }}
         />
       </Stack>

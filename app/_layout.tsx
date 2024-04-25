@@ -7,6 +7,8 @@ import { TamaguiProvider, Theme } from 'tamagui';
 import config from '@/tamagui.config';
 import { useFonts } from 'expo-font';
 import * as Notification from 'expo-notifications';
+import { Role } from '@/constants/Role';
+import { getItemAsync } from 'expo-secure-store';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,14 +30,20 @@ export default function RootLayout() {
   });
 
   React.useEffect(() => {
-    if (loaded) {
+    (async () => {
+      const token = await getItemAsync('token');
+      const role = await getItemAsync('role');
+      if (token && role) {
+        if (role === Role.ADMIN) router.replace('/(app)/adminHome');
+        if (role === Role.MANAGER) router.replace('/(app)/managerHome');
+        if (role === Role.USER) router.replace('/(app)/home');
+        if (role === Role.CHECKER) router.replace('/(app)/checkerHome');
+      }
       SplashScreen.hideAsync();
-    }
-    const time = setTimeout(() => {
-      router.push('/checkerHome');
-    }, 500);
-    return () => clearTimeout(time);
+    })();
   }, [loaded]);
+
+  React.useEffect(() => { }, [loaded]);
 
   if (!loaded) return null;
 
