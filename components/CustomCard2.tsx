@@ -17,10 +17,10 @@ export default function CustomCard2(props: CustomCard2Props) {
               <Ionicons name={iconName[props.status]} size={36} color={colorName[props.status]} />
             </XStack>
             <Paragraph theme='alt2'>
-              <Paragraph>Start Time:</Paragraph> {props.startTime.toLocaleString()}
+              <Paragraph>Start Time:</Paragraph> {props.startTime?.toLocaleString()}
             </Paragraph>
             <Paragraph theme='alt2'>
-              <Paragraph>End Time:</Paragraph> {props.endTime.toLocaleString()}
+              <Paragraph>End Time:</Paragraph> {props.endTime?.toLocaleString()}
             </Paragraph>
           </View>
         </XStack>

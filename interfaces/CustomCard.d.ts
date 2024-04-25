@@ -14,13 +14,22 @@ export interface CustomCardProps {
 }
 
 export interface CustomCard2Props {
-  value?: string;  
   reason?: string;
   email?: string;
-  heading: string;
-  startTime: Date;
-  endTime: Date;
-  status: TokenStatus;
-  name: string;
+  heading?: string;
+  startTime?: Date;
+  endTime?: Date;
+  status?: TokenStatus;
+  name?: string;
   phoneNumber?: number;
+}
+export interface AdminCardProps {
+  name?: string;
+  email?: string;
+  heading?: string;
+  exitTime?: Date;
+  returnTime?: Date;
+  phoneNumber?: number;
+  profileImg?: string;
+  status?: TokenStatus;
 }

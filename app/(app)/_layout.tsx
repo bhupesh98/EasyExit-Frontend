@@ -27,7 +27,7 @@ export default function HomeLayout() {
       >
         <Tabs.Screen
           name='adminHome'
-          redirect={role !== Role.ADMIN}
+          // redirect={role !== Role.ADMIN}
           options={{
             title: 'Home',
             tabBarIcon({ focused, color, size }) {
@@ -85,17 +85,8 @@ export default function HomeLayout() {
             },
           }}
         />
-        {/* <Tabs.Screen
-          name='profile'
-          options={{
-            title: 'Profile',
-            tabBarIcon({ focused, color, size }) {
-              return <Ionicons name={focused ? 'person' : 'person-outline'} color={color} size={size} />;
-            },
-          }}
-        /> */}
         <Tabs.Screen
-          name='profile2'
+          name='profile'
           options={{
             headerShown: true,
             headerStyle: {

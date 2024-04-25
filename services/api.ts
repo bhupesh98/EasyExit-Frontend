@@ -20,7 +20,7 @@ import {
   ProfileData,
   TokenStats,
   OutpassHandledByManagerData,
-  AdminCheckData
+  AdminCheckData,
 } from '@/interfaces/ApiResults';
 import { OutPassCardManagerProps } from '@/interfaces/CustomCardManagerProps';
 
@@ -287,7 +287,7 @@ export const getProfile = async (): Promise<ProfileData> => {
 };
 
 export const updateProfile = async (
-  data: Partial<Pick<ProfileData, 'name' | 'email' | 'phoneNumber' | 'profileImg'>>,
+  data: Partial<(Pick<ProfileData, 'name' | 'phoneNumber' | 'profileImg'>) | { password: string }>,
 ): Promise<void> => {
   try {
     if (Object.keys(data).length === 0) throw new Error('No data to update');
@@ -332,7 +332,7 @@ export const getTokenStats = async (): Promise<TokenStats> => {
   }
 };
 
-export const getCheckIns = async (): Promise<Omit<AdminCheckData,'status' | 'returnedTime'>[]> => {
+export const getCheckIns = async (): Promise<AdminCheckData[]> => {
   try {
     const jwtToken = await getItemAsync('token');
     const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/admin/checkIn`, {
@@ -340,9 +340,10 @@ export const getCheckIns = async (): Promise<Omit<AdminCheckData,'status' | 'ret
         Authorization: `Bearer ${jwtToken}`,
       },
     });
-    const res: Response200<Omit<AdminCheckData,'status' | 'returnedTime'>[]> = response.data;
+    const res: Response200<AdminCheckData[]> = response.data;
     return res.data.map(data => {
-      data.exitTime = new Date(data.exitTime);
+      data.exitTime = new Date(data.exitTime);  
+      data.returnedTime = new Date(data.returnedTime);
       return data;
     });
   } catch (error) {
@@ -403,7 +404,7 @@ export const rejectToken = async (data: { token: string }): Promise<string> => {
   }
 };
 
-export const OutpassHandledByManager = async (type:string): Promise<OutpassHandledByManagerData[]> => {
+export const OutpassHandledByManager = async (type: string): Promise<OutpassHandledByManagerData[]> => {
   try {
     const jwtToken = await getItemAsync('token');
     const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/manager/tokens/${type}`, {
@@ -424,7 +425,7 @@ export const OutpassHandledByManager = async (type:string): Promise<OutpassHandl
   }
 };
 
-export const getCheckOut = async (): Promise<AdminCheckData[]> => {
+export const getCheckOut = async (): Promise<Omit<AdminCheckData, 'status' | 'returnedTime'>[]> => {
   try {
     const jwtToken = await getItemAsync('token');
     const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/admin/checkOut`, {
@@ -433,10 +434,9 @@ export const getCheckOut = async (): Promise<AdminCheckData[]> => {
       },
     });
 
-    const res: Response200<AdminCheckData[]> = response.data;
+    const res: Response200<Omit<AdminCheckData, 'status' | 'returnedTime'>[]> = response.data;
     return res.data.map(data => {
       data.exitTime = new Date(data.exitTime);
-      data.returnedTime = new Date(data.returnedTime);
       return data;
     });
   } catch (error) {
@@ -444,4 +444,4 @@ export const getCheckOut = async (): Promise<AdminCheckData[]> => {
       throw new Error(JSON.stringify(error.response?.data));
     } else throw new Error('Unknown Error');
   }
-}
+};
