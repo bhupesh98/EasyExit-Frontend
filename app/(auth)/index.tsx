@@ -17,28 +17,31 @@ import useNotification from '@/hooks/useNotification';
 
 import messaging from '@react-native-firebase/messaging';
 
-
 export default function Login() {
-  const { subscribeTopic, setBackgroundMessageHandler, requestUserPermission, handleNotification, getToken } = useNotification();
-  
+  const { subscribeTopic, setBackgroundMessageHandler, requestUserPermission, handleNotification, getToken } =
+    useNotification();
+
   useEffect(() => {
     requestUserPermission().then(() => {
       getToken();
-    })
+    });
 
-    messaging().getInitialNotification().then(remoteM => {
-      if (remoteM) {
-        console.log("Meassage cause app to open from quit state ->", remoteM.notification);
-      }
-    })
+    messaging()
+      .getInitialNotification()
+      .then(remoteM => {
+        if (remoteM) {
+          console.log('Meassage cause app to open from quit state ->', remoteM.notification);
+        }
+      });
 
-    messaging().onNotificationOpenedApp((remoteMessage => {
-      console.log("Notification caused the app to open from background state: ", remoteMessage.notification);
-    }))
-    
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log('Notification caused the app to open from background state: ', remoteMessage.notification);
+    });
+
     setBackgroundMessageHandler();
     handleNotification();
-    subscribeTopic('ann');
+    // const organization_id = 'a020592e-1537-4672-aa3e-743db0e1fcf2';
+    // subscribeTopic(`${organization_id}-${'ann'}`);
   }, []);
 
   const [email, setEmail] = useState<string>('');
@@ -51,7 +54,10 @@ export default function Login() {
     async onSuccess(data, variables) {
       await SecureStore.setItemAsync('token', data.token);
       await SecureStore.setItemAsync('role', variables.role);
+      const organization_id = data.organizationId;
+      subscribeTopic(`${organization_id}-${'ann'}`);
       router.replace('/home');
+
     },
     onError(error) {
       ToastAndroid.show(JSON.parse(error.message).message, ToastAndroid.SHORT);

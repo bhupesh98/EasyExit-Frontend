@@ -41,6 +41,12 @@ export type TokenData = {
   token: string;
 };
 
+export type UserData = {
+  token: string;
+  name: string;
+  organizationId: String;
+}
+
 export type ProfileData = {
   name: string;
   email: string;
@@ -61,4 +67,16 @@ export type TokenStats = {
   pending: number;
   approved: number;
   denied: number;
+};
+
+
+export type NotificaitonResultsData = {
+  notificaitonId: string;
+  title: string;
+  description: string;
+  organizationId: string;
+  topic: string;
+  notificationStatus: string;
+  senderEmail: string;
+  createdAt: string;
 };

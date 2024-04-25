@@ -19,6 +19,8 @@ import {
   getSupervisorData,
   ProfileData,
   TokenStats,
+  NotificaitonResultsData,
+  UserData,
 } from '@/interfaces/ApiResults';
 
 export const getSearchResults = async (searchString: string): Promise<SearchResultsData[]> => {
@@ -35,12 +37,33 @@ export const getSearchResults = async (searchString: string): Promise<SearchResu
   }
 };
 
-export const LoginApi = async (data: LoginData): Promise<TokenData> => {
+export const getNotification = async (): Promise<NotificaitonResultsData[]> => {
+  try {
+    console.log('hello');
+    // const jwtToken = await getItemAsync('token');
+    const jwtToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJodXBlc2hAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwib3JnYW5pemF0aW9uSWQiOiJhMDIwNTkyZS0xNTM3LTQ2NzItYWEzZS03NDNkYjBlMWZjZjIiLCJpYXQiOjE3MTMzMzQ4NDV9.ycENDi41HNlw4PYfN1ryiP8osq_ohUnYQvDubQbMJ-4';
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/notificaiton`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+    // console.log('responce', response);
+    const res: Response200<NotificaitonResultsData[]> = response.data;
+    return res.data;
+  } catch (error) {
+    if ([500].includes(error.response?.status)) {
+      throw new Error(JSON.stringify(error.response?.data));
+    } else throw new Error('Unknown Error');
+  }
+};
+
+export const LoginApi = async (data: LoginData): Promise<UserData> => {
   try {
     const response = await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/login`, data);
 
     if (response.status === 200) {
-      const res: Response200<TokenData> = response.data;
+      const res: Response200<UserData> = response.data;
       return res.data;
     }
   } catch (error) {
