@@ -1,91 +1,96 @@
 import { Role } from '@/constants/Role';
 import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import { H6 } from 'tamagui';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { H6, View, ScrollView, Paragraph, H4 } from 'tamagui';
+import Avatar from '@/components/Avatar';
 import { Ionicons } from '@expo/vector-icons';
-import { toCapitalize } from '@/utils/toCapitalize';
+import { LinearGradient } from 'tamagui/linear-gradient';
 
 const Profile = () => {
   const profile = {
     name: 'Bhupesh Dewangan',
     email: 'bhupeshdewangan20@gmail.com',
-    unrestrictedStartTime: new Date().toLocaleString(),
-    unrestrictedEndTime: new Date().toLocaleString(),
-    phoneNumber: '1234567890',
-    role: Role.USER,
-    organization: 'IIITA'
+    unrestrictedStartTime: new Date().toLocaleTimeString(),
+    unrestrictedEndTime: new Date().toLocaleTimeString(),
+    phoneNumber: '+91 1234567890',
+    role: Role.MANAGER,
+    organization: 'IIITA',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1713X-yoPTqc3XMWhnQqczKaVoJjPbKbhRA&s',
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {/* Background Design */}
-        <View style={styles.background}></View>
-        {/* Profile Card */}
-        <View style={styles.profileCard}>
-          <View style={styles.profileContainer}>
-            <Image source={require('./profile_photo.jpg')} style={styles.profilePhoto} />
-            <View style={styles.basicInfo}>
-              <Text style={styles.name}>{profile.name}</Text>
-              <View style={styles.roleBadge}>
-                <Ionicons name="person-circle-outline" size={24} color="#35ABFF" />
-                <Text style={styles.roleBadgeText}>{toCapitalize(profile.role)}</Text>
-              </View>
-            </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fbfdff' }}>
+      <LinearGradient
+        w={'100%'}
+        h={'35%'}
+        mt={'$-10'}
+        zIndex={2}
+        pos='absolute'
+        borderRadius={'$10'}
+        colors={['$red10', '$yellow10']}
+        start={[0, 1]}
+        end={[0, 0]}
+        style={{
+          transform: [{ rotate: '-20deg' }],
+          // background: 'rgb(255,204,204)',
+          // background: 'linear-gradient(90deg, rgba(255,204,204,1) 0%, rgba(255,153,153,1) 100%)',
+        }}
+      ></LinearGradient>
+      <View w={'100%'} h={'20%'} mt='10%' ml='5%' pos='absolute' zi={4}>
+        <H4 col={'white'}>{profile.name}</H4>
+        <Paragraph col={'white'}>{profile.role}</Paragraph>
+      </View>
+      <View pos='absolute' ml={'58%'} mt={'20%'}>
+        <Avatar w={120} h={120} zi={5} imageUri={profile.image} />
+      </View>
+      <ScrollView pos='absolute' top={'38%'} paddingHorizontal={15}>
+        <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
+          <View
+            style={{ width: 40, height: 40, boxShadow: '5px 5px 5px 5px rgba(0, 0, 255, .2)' }}
+            jc='center'
+            ai='center'
+          >
+            <Ionicons color={'#26b6e4'} name='school' size={30} />
           </View>
-          {/* Basic Info */}
-          <View style={styles.detailContainer}>
-            <View style={styles.detailBox}>
-              <View style={styles.detailRow}>
-                <Ionicons name="mail-outline" size={32} color="#007bff" style={{ marginRight: 10 }} />
-                <View>
-                  <H6>Email</H6>
-                  <Text style={styles.detailText}>{profile.email}</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.detailBox}>
-              <View style={styles.detailRow}>
-                <Ionicons name="call-outline" size={32} color="#007bff" style={{ marginRight: 10 }} />
-                <View>
-                  <H6>Phone Number</H6>
-                  <Text style={styles.detailText}>{profile.phoneNumber}</Text>
-                </View>
-              </View>
-            </View>
+          <View gap={'$-2'}>
+            <Paragraph col={'grey'}>Institute</Paragraph>
+            <H6>{profile.organization}</H6>
           </View>
-
-          {/* Additional Details */}
-          <View style={styles.detailContainer}>
-            <View style={styles.detailBox}>
-              <View style={styles.detailRow}>
-                <Ionicons name="business-outline" size={32} color="#007bff" style={{ marginRight: 10 }} />
-                <View>
-                  <H6>Organization</H6>
-                  <Text style={styles.detailText}>{profile.organization}</Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.detailBox}>
-              <View style={styles.detailRow}>
-                <Ionicons name="time-outline" size={32} color="#007bff" style={{ marginRight: 10 }} />
-                <View>
-                  <H6>Unrestricted Start Time</H6>
-                  <Text style={styles.detailText}>{profile.unrestrictedStartTime}</Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.detailBox}>
-              <View style={styles.detailRow}>
-                <Ionicons name="time-outline" size={32} color="#007bff" style={{ marginRight: 10 }} />
-                <View>
-                  <H6>Unrestricted End Time</H6>
-                  <Text style={styles.detailText}>{profile.unrestrictedEndTime}</Text>
-                </View>
-              </View>
-            </View>
+        </View>
+        <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
+          <View style={{ width: 40, height: 40 }} jc='center' ai='center'>
+            <Ionicons color={'#f7d02e'} name='mail' size={30} />
+          </View>
+          <View gap={'$-2'}>
+            <Paragraph col={'grey'}>Email</Paragraph>
+            <H6>{profile.email}</H6>
+          </View>
+        </View>
+        <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
+          <View style={{ width: 40, height: 40 }} jc='center' ai='center'>
+            <Ionicons color={'#000000'} name='call' size={30} />
+          </View>
+          <View gap={'$-2'}>
+            <Paragraph col={'grey'}>Phone Number</Paragraph>
+            <H6>{profile.phoneNumber}</H6>
+          </View>
+        </View>
+        <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
+          <View style={{ width: 40, height: 40 }} jc='center' ai='center'>
+            <Ionicons color={'#a873f7'} name='watch' size={30} />
+          </View>
+          <View gap={'$-2'}>
+            <Paragraph col={'grey'}>Free Start Time</Paragraph>
+            <H6>{profile.unrestrictedStartTime}</H6>
+          </View>
+        </View>
+        <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
+          <View style={{ width: 40, height: 40 }} jc='center' ai='center'>
+            <Ionicons color={'#3ebba7'} name='time' size={30} />
+          </View>
+          <View gap={'$-2'}>
+            <Paragraph col={'grey'}>Free End Time</Paragraph>
+            <H6>{profile.unrestrictedEndTime}</H6>
           </View>
         </View>
       </ScrollView>

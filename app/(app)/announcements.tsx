@@ -84,12 +84,14 @@ export default function Announcements() {
         ))}
       </ScrollView>
       {/* Floating button */}
-      {role == Role.ADMIN && <TouchableOpacity style={styles.floatingButton} onPress={handleCreateNotification}>
-        <Ionicons name='add' size={24} color='#fff' />
-      </TouchableOpacity>}
+      {role == Role.ADMIN && (
+        <TouchableOpacity style={styles.floatingButton} onPress={handleCreateNotification}>
+          <Ionicons name='add' size={24} color='#fff' />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   overlay: {
