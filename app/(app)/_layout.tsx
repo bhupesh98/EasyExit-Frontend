@@ -27,7 +27,7 @@ export default function HomeLayout() {
       >
         <Tabs.Screen
           name='adminHome'
-          // redirect={role !== Role.ADMIN}
+          redirect={role !== Role.ADMIN}
           options={{
             title: 'Home',
             tabBarIcon({ focused, color, size }) {
@@ -86,7 +86,7 @@ export default function HomeLayout() {
           }}
         />
         <Tabs.Screen
-          name='profile'
+          name='profile2'
           options={{
             headerShown: true,
             headerStyle: {

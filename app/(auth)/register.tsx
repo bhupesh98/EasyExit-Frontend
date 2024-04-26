@@ -163,7 +163,7 @@ export default function Register() {
           {error && password.trim() === '' && <H6 col={'$red10'}>Password is required</H6>}
           <Label ml='$2' mb='$1' unstyled mt='$1'>
             Select Role
-          </Label>
+          </Label><View w={'100%'}>
           <RadioGroup
             aria-labelledby='Select one item'
             name='form'
@@ -176,11 +176,11 @@ export default function Register() {
             paddingLeft='$3'
             borderRadius={'$4'}
           >
-            <YStack width={300} alignItems='center' gap='$1'>
+            <YStack width={'100%'} gap='$1' paddingHorizontal={"$2"}>
               <RadioGroupItemWithLabel size='$4' value={Role.ADMIN} label='Admin' />
               <RadioGroupItemWithLabel size='$4' value={Role.USER} label='People' />
             </YStack>
-          </RadioGroup>
+          </RadioGroup></View>
           {role === Role.USER && (
             <CustomSelect
               value={organizationId}

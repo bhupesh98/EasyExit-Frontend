@@ -308,6 +308,7 @@ export const addSupervisor = async (data: addSupervisorData): Promise<void> => {
 
 export const getProfile = async (): Promise<ProfileData> => {
   try {
+    
     const jwtToken = await getItemAsync('token');
     const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/profile`, {
       headers: {
@@ -315,11 +316,15 @@ export const getProfile = async (): Promise<ProfileData> => {
       },
     });
 
+    
     const res: Response200<ProfileData> = response.data;
     res.data.unrestrictedStartTime = new Date(res.data.unrestrictedStartTime);
     res.data.unrestrictedEndTime = new Date(res.data.unrestrictedEndTime);
+    // console.log('what is profile??',res);
+    
     return res.data;
   } catch (error) {
+    
     if ([500].includes(error.response?.status)) {
       throw new Error(JSON.stringify(error.response?.data));
     } else throw new Error('Unknown Error');

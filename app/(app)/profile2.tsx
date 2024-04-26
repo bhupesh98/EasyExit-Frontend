@@ -1,47 +1,58 @@
 import { Role } from '@/constants/Role';
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { H6, View, ScrollView, Paragraph, H4 } from 'tamagui';
+import { H6, View, ScrollView, Paragraph, H4, Button, ButtonText } from 'tamagui';
 import Avatar from '@/components/Avatar';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'tamagui/linear-gradient';
+import { useQuery } from '@tanstack/react-query';
+import { getProfile } from '@/services/api';
+import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
+import useNotification from '@/hooks/useNotification';
 
 const Profile = () => {
-  const profile = {
-    name: 'Bhupesh Dewangan',
-    email: 'bhupeshdewangan20@gmail.com',
-    unrestrictedStartTime: new Date().toLocaleTimeString(),
-    unrestrictedEndTime: new Date().toLocaleTimeString(),
-    phoneNumber: '+91 1234567890',
-    role: Role.MANAGER,
-    organization: 'IIITA',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1713X-yoPTqc3XMWhnQqczKaVoJjPbKbhRA&s',
-  };
-
+  const { unsubscribeTopic } = useNotification();
+  // const profile = {
+  //   name: 'Bhupesh Dewangan',
+  //   email: 'bhupeshdewangan20@gmail.com',
+  //   unrestrictedStartTime: new Date().toLocaleTimeString(),
+  //   unrestrictedEndTime: new Date().toLocaleTimeString(),
+  //   phoneNumber: '+91 1234567890',
+  //   role: Role.MANAGER,
+  //   organization: 'IIITA',
+  //   image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1713X-yoPTqc3XMWhnQqczKaVoJjPbKbhRA&s',
+  // };
+  const { data: profile } = useQuery({
+    queryKey: ['profile', 'my'],
+    queryFn: getProfile,
+  });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fbfdff' }}>
-      <LinearGradient
-        w={'100%'}
+      <View
+        w={'110%'}
         h={'35%'}
         mt={'$-10'}
-        zIndex={2}
+        zIndex={-2}
         pos='absolute'
         borderRadius={'$10'}
-        colors={['$red10', '$yellow10']}
-        start={[0, 1]}
-        end={[0, 0]}
+        bg={'$blue8Light'}
+        // colors={['$red10', '$yellow10']}
+        // start={[0, 1]}
+        // end={[0, 0]}
         style={{
-          transform: [{ rotate: '-20deg' }],
+          transform: [{ rotate: '-15deg' }],
           // background: 'rgb(255,204,204)',
           // background: 'linear-gradient(90deg, rgba(255,204,204,1) 0%, rgba(255,153,153,1) 100%)',
         }}
-      ></LinearGradient>
+      />
       <View w={'100%'} h={'20%'} mt='10%' ml='5%' pos='absolute' zi={4}>
-        <H4 col={'white'}>{profile.name}</H4>
-        <Paragraph col={'white'}>{profile.role}</Paragraph>
+        <H4 col={'white'}>{profile?.name}</H4>
+        <Paragraph col={'white'}>{profile?.role}</Paragraph>
       </View>
       <View pos='absolute' ml={'58%'} mt={'20%'}>
-        <Avatar w={120} h={120} zi={5} imageUri={profile.image} />
+        <Avatar w={120} h={120} zi={5} imageUri={profile?.profileImg} />
       </View>
       <ScrollView pos='absolute' top={'38%'} paddingHorizontal={15}>
         <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
@@ -54,7 +65,7 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Institute</Paragraph>
-            <H6>{profile.organization}</H6>
+            <H6>{profile?.organization}</H6>
           </View>
         </View>
         <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
@@ -63,7 +74,7 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Email</Paragraph>
-            <H6>{profile.email}</H6>
+            <H6>{profile?.email}</H6>
           </View>
         </View>
         <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
@@ -72,7 +83,7 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Phone Number</Paragraph>
-            <H6>{profile.phoneNumber}</H6>
+            <H6>{profile?.phoneNumber}</H6>
           </View>
         </View>
         <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
@@ -81,7 +92,7 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Free Start Time</Paragraph>
-            <H6>{profile.unrestrictedStartTime}</H6>
+            <H6>{profile?.unrestrictedStartTime}</H6>
           </View>
         </View>
         <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
@@ -90,10 +101,25 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Free End Time</Paragraph>
-            <H6>{profile.unrestrictedEndTime}</H6>
+            <H6>{profile?.unrestrictedEndTime}</H6>
           </View>
         </View>
       </ScrollView>
+      <View jc='flex-end' flex={1} mb={'$2'} mx='$5'>
+        <Button
+          bg={'$red3Light'}
+          onPress={async () => {
+            await SecureStore.deleteItemAsync('token');
+            await SecureStore.deleteItemAsync('role');
+            await AsyncStorage.multiRemove(['name', 'email']);
+            const organization_id = SecureStore.getItem('organization_id');
+            unsubscribeTopic(`${organization_id}-${'ann'}`);
+            router.replace('/');
+          }}
+        >
+          <ButtonText>Logout</ButtonText>
+        </Button>
+      </View>
     </SafeAreaView>
   );
 };

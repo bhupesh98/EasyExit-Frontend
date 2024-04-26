@@ -1,5 +1,5 @@
 export interface AvatarProps {
-    imageUri: string;
+    imageUri?: string;
     onPress?: () => void;
     w?: number;
     zi?: number;

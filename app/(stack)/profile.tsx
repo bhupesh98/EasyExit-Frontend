@@ -22,7 +22,7 @@ export default function Profile() {
 
       {/* Profile Photo and Basic Info */}
       <View style={styles.basicInfoContainer}>
-        <Image source={require('./profile_photo.jpg')} style={styles.profilePhoto} />
+        <Image source={require('@/assets/profile_photo.jpg')} style={styles.profilePhoto} />
         <View style={styles.basicInfo}>
           <Text style={styles.name}>Name: {profile.name}</Text>
         </View>

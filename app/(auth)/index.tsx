@@ -27,7 +27,8 @@ export default function Login() {
     async onSuccess(data, variables) {
       await SecureStore.setItemAsync('token', data.token);
       await SecureStore.setItemAsync('role', variables.role);
-      const organization_id = data.organizationId;
+      const organization_id = data.organizationId.toString();
+      await SecureStore.setItemAsync('organization_id', organization_id);
       subscribeTopic(`${organization_id}-${'ann'}`);
       router.replace('/home');
     },
@@ -89,26 +90,29 @@ export default function Login() {
         <Label ml='$2' mb='$1' unstyled mt='$1'>
           Select Role
         </Label>
-        <RadioGroup
-          borderColor={'$blue6Light'}
-          borderWidth={1}
-          borderRadius={'$4'}
-          aria-labelledby='Select one item'
-          name='form'
-          paddingLeft='$3'
-          value={role}
-          onValueChange={value => {
-            setRole(value as Role);
-          }}
-          mb='$3'
-        >
-          <YStack width={300} alignItems='center' gap='$1'>
-            <RadioGroupItemWithLabel size='$4' value={Role.ADMIN} label='Admin' />
-            <RadioGroupItemWithLabel size='$4' value={Role.USER} label='People' />
-            <RadioGroupItemWithLabel size='$4' value={Role.MANAGER} label='Manager' />
-            <RadioGroupItemWithLabel size='$4' value={Role.CHECKER} label='Checker' />
-          </YStack>
-        </RadioGroup>
+        <View w={'100%'}>
+          <RadioGroup
+            borderColor={'$blue6Light'}
+            borderWidth={1}
+            borderRadius={'$4'}
+            aria-labelledby='Select one item'
+            name='form'
+            paddingLeft='$3'
+            value={role}
+            // width={"200%"}
+            onValueChange={value => {
+              setRole(value as Role);
+            }}
+            mb='$3'
+          >
+            <YStack width={'100%'} gap='$1' paddingHorizontal={"$2"}>
+              <RadioGroupItemWithLabel size='$4' value={Role.ADMIN} label='Admin' />
+              <RadioGroupItemWithLabel size='$4' value={Role.USER} label='People' />
+              <RadioGroupItemWithLabel size='$4' value={Role.MANAGER} label='Manager' />
+              <RadioGroupItemWithLabel size='$4' value={Role.CHECKER} label='Checker' />
+            </YStack>
+          </RadioGroup>
+        </View>
         <Button w={'100%'} h={'$5'} disabled={loginMutation.isPending} onPress={handleLogin} themeInverse>
           {loginMutation.isPending ?
             <ActivityIndicator />
