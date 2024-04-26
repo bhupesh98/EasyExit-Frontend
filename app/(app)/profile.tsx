@@ -10,7 +10,7 @@ export default function Profile() {
     email: 'john@doe.com',
     unrestrictedStartTime: new Date().toLocaleString(),
     unrestrictedEndTime: new Date().toLocaleString(),
-    phoneNumber: '1234567890'
+    phoneNumber: '1234567890',
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -39,7 +39,7 @@ export default function Profile() {
               value={profile.unrestrictedStartTime}
               placeholder='Unrestricted Start Time'
               id='profile-start-time'
-            // onChangeText={handleStartTimeChange}
+              // onChangeText={handleStartTimeChange}
             />
           </View>
           {/* Unrestricted End Time */}
@@ -50,7 +50,7 @@ export default function Profile() {
               value={profile.unrestrictedEndTime}
               placeholder='Unrestricted End Time'
               id='profile-end-time'
-            // onChangeText={handleEndTimeChange}
+              // onChangeText={handleEndTimeChange}
             />
           </View>
           {/* Email */}
@@ -81,7 +81,7 @@ export default function Profile() {
       </View>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

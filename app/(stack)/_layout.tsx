@@ -67,6 +67,24 @@ export default function AuthLayout() {
             title: 'Student OutPass',
           }}
         />
+        <Stack.Screen
+          name='updateProfile'
+          options={{
+            title: 'Update Profile',
+          }}
+        />
+        <Stack.Screen
+          name='checkIns'
+          options={{
+            title: 'Check-In',
+          }}
+        />
+        <Stack.Screen
+          name='checkOut'
+          options={{
+            title: 'Check-Out',
+          }}
+        />
       </Stack>
     </>
   );

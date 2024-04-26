@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, ImageBackground, TouchableOpacity, Text, Modal } from 'react-native';
-import CustomTextInput2 from '@/components/CustomTextInput2';
+import CustomTextInput from '@/components/CustomTextInput';
 import { H2, H4, H6 } from 'tamagui';
 import { Image, Button, ButtonText, View } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,7 +42,7 @@ export default function CreateAnnouncement() {
         </ImageBackground>
       </View>
       <View style={styles.formContainer}>
-        <CustomTextInput2
+        <CustomTextInput
           value={topic}
           placeholder='Topic'
           onChangeText={text => {
@@ -50,9 +50,8 @@ export default function CreateAnnouncement() {
             setError(false);
           }}
           error={error}
-          multiline={false}
         />
-        <CustomTextInput2
+        <CustomTextInput
           value={title}
           placeholder='Title'
           onChangeText={text => {
@@ -60,9 +59,8 @@ export default function CreateAnnouncement() {
             setError(false);
           }}
           error={error}
-          multiline={false}
         />
-        <CustomTextInput2
+        <CustomTextInput
           value={description}
           placeholder='Description'
           onChangeText={text => {
@@ -70,7 +68,6 @@ export default function CreateAnnouncement() {
             setError(false);
           }}
           error={error}
-          multiline={true} // Use multiline for longer description
         />
 
         {error && <H6 col='$red10'>Please fill out all the fields</H6>}

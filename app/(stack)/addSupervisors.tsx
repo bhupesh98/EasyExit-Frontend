@@ -7,7 +7,7 @@ import { addSupervisor } from '@/services/api';
 import { addSupervisorData } from '@/interfaces/ApiDTO';
 import { ToastAndroid, SafeAreaView } from 'react-native';
 import { router } from 'expo-router';
-import AgreeSVG from '@/assets/agree.svg';
+// import AgreeSVG from '@/assets/agree.svg';
 
 export default function AddSupervisors() {
   const [managerEmails, setManagerEmails] = React.useState<string[]>(['']);
@@ -133,7 +133,7 @@ export default function AddSupervisors() {
           >
             <YStack jc='center' ai='center' gap='$4'>
               <AlertDialog.Title fow={'bold'}>Done</AlertDialog.Title>
-              <AgreeSVG width={150} height={150} />
+              {/* <AgreeSVG width={150} height={150} /> */}
               <AlertDialog.Description>
                 {'Supervisors added successfully.\n An email has been sent to each supervisor.'}
               </AlertDialog.Description>

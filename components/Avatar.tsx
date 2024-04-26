@@ -5,7 +5,10 @@ import { AvatarProps } from '@/interfaces/Avatar';
 
 export default function Avatar(props: AvatarProps) {
   return (
-    <View style={{ width: 100, height: 100, borderRadius: 50 }}>
+    <View
+      style={{ width: props.w ?? 100, height: props.h ?? 100, borderRadius: 50, padding: (props.h ?? 100) /20, borderColor: 'black', borderWidth: 1}}
+      onPress={props.onPress}
+    >
       <Image
         source={{
           uri: props.imageUri,
@@ -15,7 +18,8 @@ export default function Avatar(props: AvatarProps) {
           width: null,
           height: null,
           resizeMode: 'cover',
-          borderRadius: 50,
+          borderRadius: 100,
+          zIndex:props.zi ?? 0
         }}
       ></Image>
     </View>

@@ -53,7 +53,7 @@ export type ProfileData = {
   organization: string;
   unrestrictedStartTime: Date;
   unrestrictedEndTime: Date;
-  role: Role;
+  role: Role; 
   phoneNumber: number;
   profileImg?: string;
 };
@@ -89,6 +89,7 @@ export type AdminCheckData = {
   heading: string;
   exitTime: Date;
   returnedTime: Date;
+  profileImg?: string;
   status: TokenStatus;
 };
 
