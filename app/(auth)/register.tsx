@@ -17,8 +17,10 @@ import { getSearchResults, studentRegister } from '@/services/api';
 import useDebounce from '@/hooks/useDebounce';
 import { Role } from '@/constants/Role';
 import * as FileSystem from 'expo-file-system';
+import useNotification from '@/hooks/useNotification';
 
 export default function Register() {
+  const { subscribeTopic } = useNotification();
   const [profileImg, setProfileImg] = React.useState<string | null>(null);
   const [name, setName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
@@ -39,11 +41,13 @@ export default function Register() {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: [Role.USER, 'register'],
     mutationFn: studentRegister,
-    async onSuccess(data) {
+    async onSuccess(data, variables) {
       await SecureStore.setItemAsync('token', data.token);
       await SecureStore.setItemAsync('role', Role.USER);
       await AsyncStorage.setItem('name', name);
       await AsyncStorage.setItem('email', email);
+      const organization_id = variables.organizationId;
+      subscribeTopic(`${organization_id}-${'ann'}`);
       router.replace('/home');
     },
     onError(error) {

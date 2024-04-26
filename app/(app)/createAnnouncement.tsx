@@ -4,6 +4,7 @@ import CustomTextInput from '@/components/CustomTextInput';
 import { H2, H4, H6 } from 'tamagui';
 import { Image, Button, ButtonText, View } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { sendNotification } from '@/services/api';
 
 export default function CreateAnnouncement() {
   const [topic, setTopic] = useState('');
@@ -20,8 +21,15 @@ export default function CreateAnnouncement() {
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     // Implement your logic to send the notification
+    console.log(topic, title, description);
+    try {
+      const responce = await sendNotification(topic, title, description);
+      console.log(responce.message);
+    } catch (err) {
+      console.error(err);
+    }
     setShowConfirmation(false);
   };
 

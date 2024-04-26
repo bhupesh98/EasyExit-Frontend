@@ -15,6 +15,15 @@ export default function useNotification() {
   function setBackgroundMessageHandler() {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       console.log('Message handled in the background!', remoteMessage);
+
+      // send a notification to the user
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: remoteMessage.data?.title.toString(),
+          body: remoteMessage.data?.description.toString(),
+        },
+        trigger: null,
+      });
     });
   }
   async function requestUserPermission() {
@@ -83,8 +92,14 @@ export default function useNotification() {
 
   const handleNotification = () => {
     messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!');
       console.log(JSON.stringify(remoteMessage));
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: remoteMessage.data?.title.toString(),
+          body: remoteMessage.data?.description.toString(),
+        },
+        trigger: null,
+      });
     });
   };
 
@@ -108,6 +123,6 @@ export default function useNotification() {
     subscribeTopic,
     unsubscribeTopic,
     setBackgroundMessageHandler,
-    getToken
+    getToken,
   };
 }

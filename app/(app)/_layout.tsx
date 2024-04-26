@@ -67,7 +67,7 @@ export default function HomeLayout() {
         />
         <Tabs.Screen
           name='announcements'
-          redirect={role === Role.ADMIN}
+          // redirect={role === Role.ADMIN}
           options={{
             title: 'Announcements',
             tabBarIcon({ focused, color, size }) {

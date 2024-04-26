@@ -35,7 +35,7 @@ export default function CheckIns() {
   // ];
 
   return (
-    <ScrollView  style={{ flex: 1, backgroundColor: '#fbfdff' }}>
+    <ScrollView style={{ flex: 1, backgroundColor: '#fbfdff' }}>
       <SafeAreaView style={{ flex: 1, paddingHorizontal: 10, paddingTop: 10, alignItems: 'center' }}>
         {isLoading ?
           <Spinner size='large' color='$blue1Dark' />

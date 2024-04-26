@@ -14,7 +14,7 @@ export default function Profile() {
   const [name, setName] = React.useState<string>('');
   const [phoneNumber, setPhoneNumber] = React.useState<number>(null);
   const [password, setPassword] = React.useState<string>(null);
-  
+
   // const profile = {
   //   name: 'John Doe',
   //   email: 'john@doe.com',
@@ -80,7 +80,7 @@ export default function Profile() {
               editable={false}
               value={name}
               placeholder='********'
-              onChangeText={(text) => setName(text)}
+              onChangeText={text => setName(text)}
               id='profile-Name'
             />
           </View>
@@ -91,7 +91,7 @@ export default function Profile() {
               editable={false}
               value={password}
               placeholder='********'
-              onChangeText={(text) => setPassword(text)}
+              onChangeText={text => setPassword(text)}
               id='profile-Password'
               // onChangeText={handlePasswordChange}
               keyboardType='visible-password'
@@ -104,7 +104,7 @@ export default function Profile() {
             <CustomTextInput
               editable={editable}
               value={String(phoneNumber)}
-              onChangeText={(text) => setPhoneNumber(parseInt(text))}
+              onChangeText={text => setPhoneNumber(parseInt(text))}
               placeholder='Phone Number'
               id='profile-phone'
               // onChangeText={handlePhoneNumberChange}
@@ -119,7 +119,9 @@ export default function Profile() {
             }
             setEditable(!editable);
           }}
-          ><ButtonText>{editable ? 'Save' : 'Edit'}</ButtonText></Button>
+        >
+          <ButtonText>{editable ? 'Save' : 'Edit'}</ButtonText>
+        </Button>
       </View>
     </SafeAreaView>
   );

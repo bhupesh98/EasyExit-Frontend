@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getItemAsync } from 'expo-secure-store';
 
-import { Response200, Response204 } from '@/interfaces/ResponseCodes';
+import { Response200, Response204 , Response200NoData} from '@/interfaces/ResponseCodes';
 import {
   AdminRegisterData,
   LoginData,
@@ -44,8 +44,7 @@ export const getNotification = async (): Promise<NotificaitonResultsData[]> => {
   try {
     console.log('hello');
     // const jwtToken = await getItemAsync('token');
-    const jwtToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJodXBlc2hAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwib3JnYW5pemF0aW9uSWQiOiJhMDIwNTkyZS0xNTM3LTQ2NzItYWEzZS03NDNkYjBlMWZjZjIiLCJpYXQiOjE3MTMzMzQ4NDV9.ycENDi41HNlw4PYfN1ryiP8osq_ohUnYQvDubQbMJ-4';
+    const jwtToken = await getItemAsync('token');
     const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_URL}/notificaiton`, {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -60,6 +59,24 @@ export const getNotification = async (): Promise<NotificaitonResultsData[]> => {
     } else throw new Error('Unknown Error');
   }
 };
+
+export const sendNotification = async (topic: string, title:string, description:string):Promise<Response200NoData> =>  {
+  const data = { topic, title, description }
+  const jwtToken = await getItemAsync('token');
+  try {
+    const response: Response200NoData = (await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_URL}/notificaiton`, data, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })).data;
+    console.log(response);
+    return response;
+  } catch (error) {
+    if ([500].includes(error.response?.status)) {
+      throw new Error(JSON.stringify(error.response?.data));
+    } else throw new Error('Unknown Error');
+  }
+}
 
 export const LoginApi = async (data: LoginData): Promise<UserData> => {
   try {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import AnnouncementItem, { Announcement } from '../../components/AnnouncementItem';
+import AnnouncementItem from '../../components/AnnouncementItem';
 import { ImageBackground } from 'react-native';
 import { View, H2, H4 } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,10 +9,10 @@ import { router } from 'expo-router';
 import { getItem } from 'expo-secure-store';
 import { Role } from '@/constants/Role';
 
-export default function Announcements() {
 import { useQuery } from '@tanstack/react-query';
 
 import { getNotification } from '@/services/api';
+import * as SecureStore from 'expo-secure-store';
 
 interface Announcement {
   title: string;
@@ -23,17 +23,15 @@ interface Announcement {
   createdAt: string;
 }
 
-const Announcements: React.FC = () => {
+export default function Announcements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
-  
+  const role = SecureStore.getItem('role');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         // const r = await getNotification();
-
 
         const response = await getNotification();
 

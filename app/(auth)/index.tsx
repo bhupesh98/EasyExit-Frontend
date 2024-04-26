@@ -12,37 +12,10 @@ import { Role } from '@/constants/Role';
 import { ActivityIndicator, Image, ToastAndroid } from 'react-native';
 import { RadioGroupItemWithLabel } from '@/components/RadioGroupItemWithLabel';
 import { Heading } from '@/tamagui.config';
-
 import useNotification from '@/hooks/useNotification';
 
-import messaging from '@react-native-firebase/messaging';
-
 export default function Login() {
-  const { subscribeTopic, setBackgroundMessageHandler, requestUserPermission, handleNotification, getToken } =
-    useNotification();
-
-  useEffect(() => {
-    requestUserPermission().then(() => {
-      getToken();
-    });
-
-    messaging()
-      .getInitialNotification()
-      .then(remoteM => {
-        if (remoteM) {
-          console.log('Meassage cause app to open from quit state ->', remoteM.notification);
-        }
-      });
-
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log('Notification caused the app to open from background state: ', remoteMessage.notification);
-    });
-
-    setBackgroundMessageHandler();
-    handleNotification();
-    // const organization_id = 'a020592e-1537-4672-aa3e-743db0e1fcf2';
-    // subscribeTopic(`${organization_id}-${'ann'}`);
-  }, []);
+  const { subscribeTopic } = useNotification();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -57,7 +30,6 @@ export default function Login() {
       const organization_id = data.organizationId;
       subscribeTopic(`${organization_id}-${'ann'}`);
       router.replace('/home');
-
     },
     onError(error) {
       ToastAndroid.show(JSON.parse(error.message).message, ToastAndroid.SHORT);
