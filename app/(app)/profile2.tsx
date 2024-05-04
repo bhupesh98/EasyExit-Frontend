@@ -92,7 +92,7 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Free Start Time</Paragraph>
-            <H6>{profile?.unrestrictedStartTime}</H6>
+            <H6>{profile?.unrestrictedStartTime?.toTimeString()}</H6>
           </View>
         </View>
         <View fd={'row'} gap={'$3'} ai='center' mb={'$3'}>
@@ -101,7 +101,7 @@ const Profile = () => {
           </View>
           <View gap={'$-2'}>
             <Paragraph col={'grey'}>Free End Time</Paragraph>
-            <H6>{profile?.unrestrictedEndTime}</H6>
+            <H6>{profile?.unrestrictedEndTime?.toTimeString()}</H6>
           </View>
         </View>
       </ScrollView>
