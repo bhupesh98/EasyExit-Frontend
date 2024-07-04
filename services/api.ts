@@ -78,7 +78,7 @@ export const sendNotification = async (topic: string, title:string, description:
   }
 }
 
-export const LoginApi = async (data: LoginData): Promise<UserData> => {
+export const loginApi = async (data: LoginData): Promise<UserData> => {
   try {
     const response = await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/login`, data);
 

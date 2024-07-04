@@ -55,7 +55,6 @@ const renderData = (data: OutpassHandledByManagerData[], type: string) => {
       : data.map(value => (
           <CustomCard2
             key={value.token}
-            value={value.token}
             status={value.status}
             name={value.name}
             email={value.email}

@@ -6,10 +6,7 @@ import { ImageBackground } from 'react-native';
 import { View, H2, H4 } from 'tamagui';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { getItem } from 'expo-secure-store';
 import { Role } from '@/constants/Role';
-
-import { useQuery } from '@tanstack/react-query';
 
 import { getNotification } from '@/services/api';
 import * as SecureStore from 'expo-secure-store';

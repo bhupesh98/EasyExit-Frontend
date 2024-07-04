@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Link, router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 
-import { LoginApi } from '@/services/api';
+import { loginApi } from '@/services/api';
 import { LoginData } from '@/interfaces/ApiDTO';
 import { Role } from '@/constants/Role';
 import { ActivityIndicator, Image, ToastAndroid } from 'react-native';
@@ -23,7 +23,7 @@ export default function Login() {
   const [error, setError] = React.useState<boolean>(false);
   const loginMutation = useMutation({
     mutationKey: ['login'],
-    mutationFn: LoginApi,
+    mutationFn: loginApi,
     async onSuccess(data, variables) {
       await SecureStore.setItemAsync('token', data.token);
       await SecureStore.setItemAsync('role', variables.role);
@@ -105,7 +105,7 @@ export default function Login() {
             }}
             mb='$3'
           >
-            <YStack width={'100%'} gap='$1' paddingHorizontal={"$2"}>
+            <YStack width={'100%'} gap='$1' paddingHorizontal={'$2'}>
               <RadioGroupItemWithLabel size='$4' value={Role.ADMIN} label='Admin' />
               <RadioGroupItemWithLabel size='$4' value={Role.USER} label='People' />
               <RadioGroupItemWithLabel size='$4' value={Role.MANAGER} label='Manager' />

@@ -163,24 +163,26 @@ export default function Register() {
           {error && password.trim() === '' && <H6 col={'$red10'}>Password is required</H6>}
           <Label ml='$2' mb='$1' unstyled mt='$1'>
             Select Role
-          </Label><View w={'100%'}>
-          <RadioGroup
-            aria-labelledby='Select one item'
-            name='form'
-            value={role}
-            onValueChange={value => setRole(value as Role)}
-            mb='$3'
-            w={'100%'}
-            borderColor={'$blue6Light'}
-            borderWidth={1}
-            paddingLeft='$3'
-            borderRadius={'$4'}
-          >
-            <YStack width={'100%'} gap='$1' paddingHorizontal={"$2"}>
-              <RadioGroupItemWithLabel size='$4' value={Role.ADMIN} label='Admin' />
-              <RadioGroupItemWithLabel size='$4' value={Role.USER} label='People' />
-            </YStack>
-          </RadioGroup></View>
+          </Label>
+          <View w={'100%'}>
+            <RadioGroup
+              aria-labelledby='Select one item'
+              name='form'
+              value={role}
+              onValueChange={value => setRole(value as Role)}
+              mb='$3'
+              w={'100%'}
+              borderColor={'$blue6Light'}
+              borderWidth={1}
+              paddingLeft='$3'
+              borderRadius={'$4'}
+            >
+              <YStack width={'100%'} gap='$1' paddingHorizontal={'$2'}>
+                <RadioGroupItemWithLabel size='$4' value={Role.ADMIN} label='Admin' />
+                <RadioGroupItemWithLabel size='$4' value={Role.USER} label='People' />
+              </YStack>
+            </RadioGroup>
+          </View>
           {role === Role.USER && (
             <CustomSelect
               value={organizationId}
